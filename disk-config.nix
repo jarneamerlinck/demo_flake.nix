@@ -30,17 +30,16 @@
                   # Subvolume name is different from mountpoint
                   "/rootfs" = {
                     mountpoint = "/";
-                    mountOptions = [ "" ];
                   };
                   "/home" = {
-                    mountOptions = [ "compress=zstd" ];
+                    # mountOptions = [ "compress=zstd" ];
                     mountpoint = "/home";
                   };
                   # Sub(sub)volume doesn't need a mountpoint as its parent is mounted
                   # "/home/elliott" = { };
                   # Parent is not mounted so the mountpoint must be set
                   "/nix" = {
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    # mountOptions = [ "compress=zstd" "noatime" ];
                     mountpoint = "/nix";
                   };
                 };
