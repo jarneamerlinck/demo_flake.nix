@@ -22,5 +22,5 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIChbniu+YcsTe52noo4wg9R3lZsSwpj7weCUtyPRgVbK eragon@vm1"
   ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "23.11";
 }
