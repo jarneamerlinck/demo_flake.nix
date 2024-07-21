@@ -34,12 +34,12 @@
           ./configuration.nix
         ];
       };
-      nixosConfigurations.amd-system = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          disko.nixosModules.disko
-          ./configuration.nix
-        ];
-      };
+      # nixosConfigurations.amd-system = nixpkgs.lib.nixosSystem {
+      #   system = "aarch64-linux";
+      #   modules = [
+      #     disko.nixosModules.disko
+      #     ./configuration.nix
+      #   ];
+      # };
     };
 }
