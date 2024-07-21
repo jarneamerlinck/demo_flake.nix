@@ -1,20 +1,45 @@
 {
-  description = "A flake for building Hello World";
-  inputs = {
-  nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.disko.url = "github:nix-community/disko";
+  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
-  };
-  outputs = { self, nixpkgs }: {
+  outputs = { nixpkgs, disko, ... }:
+    {
+      # nixosConfigurations.hetzner-cloud = nixpkgs.lib.nixosSystem {
+      #   system = "x86_64-linux";
+      #   modules = [
+      #     disko.nixosModules.disko
+      #     ./configuration.nix
+      #   ];
+      # };
+      # tested with 2GB/2CPU droplet, 1GB droplets do not have enough RAM for kexec
+      nixosConfigurations.atlas = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          disko.nixosModules.disko
+          { disko.devices.disk.disk1.device = "/dev/vda"; }
+          {
+            # do not use DHCP, as DigitalOcean provisions IPs using cloud-init
+            # networking.useDHCP = nixpkgs.lib.mkForce false;
 
-    defaultPackage.x86_64-linux =
-      # Notice the reference to nixpkgs here.
-      with import nixpkgs { system = "x86_64-linux"; };
-      stdenv.mkDerivation {
-        name = "hello";
-        src = self;
-        buildPhase = "gcc -o hello ./hello.c";
-        installPhase = "mkdir -p $out/bin; install -t $out/bin hello";
+            # services.cloud-init = {
+            #   enable = true;
+            #   network.enable = true;
+            #
+            #   # not strictly needed, just for good measure
+            #   datasource_list = [ "DigitalOcean" ];
+            #   datasource.DigitalOcean = { };
+            # };
+          }
+          ./configuration.nix
+        ];
       };
-
-  };
+      nixosConfigurations.amd-system = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          disko.nixosModules.disko
+          ./configuration.nix
+        ];
+      };
+    };
 }

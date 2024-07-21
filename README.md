@@ -1,3 +1,3 @@
-# Demo for a nix flake
+# nixos-anywhere-examples
 
-This is a demo nix flake to experiment with
+Checkout the [flake.nix](flake.nix) for examples tested on different hosters.
