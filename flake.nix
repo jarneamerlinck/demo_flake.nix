@@ -1,20 +1,37 @@
 {
-  description = "A flake for building Hello World";
-  inputs = {
-  nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+  description = "A flake for my dream2nix packages";
 
+  inputs = { #
+    dream2nix.url = "github:nix-community/dream2nix";
+    nixpkgs.follows = "dream2nix/nixpkgs";
   };
-  outputs = { self, nixpkgs }: {
 
-    defaultPackage.x86_64-linux =
-      # Notice the reference to nixpkgs here.
-      with import nixpkgs { system = "x86_64-linux"; };
-      stdenv.mkDerivation {
-        name = "hello";
-        src = self;
-        buildPhase = "gcc -o hello ./hello.c";
-        installPhase = "mkdir -p $out/bin; install -t $out/bin hello";
+  outputs = {
+    self,
+    dream2nix,
+    nixpkgs,
+  }:
+  let
+    eachSystem = nixpkgs.lib.genAttrs [ #
+      "aarch64-darwin"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "x86_64-linux"
+    ];
+  in {
+    packages = eachSystem (system: {
+      hello = dream2nix.lib.evalModules { #
+        packageSets.nixpkgs = nixpkgs.legacyPackages.${system}; #
+        modules = [
+          ./hello.nix #
+          { #
+            paths.projectRoot = ./.;
+            paths.projectRootFile = "flake.nix";
+            paths.package = ./.;
+          }
+        ];
       };
-
+      default = self.packages.${system}.hello;  #
+    });
   };
 }
