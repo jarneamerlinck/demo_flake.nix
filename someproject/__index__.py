@@ -1,5 +1,11 @@
-import PIL
-import sklearn
-import torch
+# Imports
+import speechtotext
+from speechtotext.datasets import Dataset
+from speechtotext.benchmark.customBenchmarks import *
+from speechtotext.benchmark.benchmarks import run_benchmarks, Benchmark
+from speechtotext.functions import force_cudnn_initialization
+from speechtotext.plot.plotting import Plotting
 
-print("hello world")
+import speechtotext.metric.customMetrics
+force_cudnn_initialization()
+print("All loaded in!!!!!!!!!!")

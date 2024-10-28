@@ -3,9 +3,7 @@ name = "someproject"
 version = "0.1.0"
 
 dependencies = [
-  "pillow",
-  "scikit-learn",
-  "torch",
+  "speechtotext-python",
 ]
 
 [tool.setuptools.packages.find]
