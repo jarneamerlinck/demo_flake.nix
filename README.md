@@ -5,7 +5,7 @@ This is a demo nix flake to experiment with
 
 
 ```bash
-nix run .#default.lock
+nix run
 ```
 
 
