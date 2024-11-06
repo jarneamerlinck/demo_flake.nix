@@ -9,7 +9,7 @@
   ];
 
   deps = {nixpkgs, ...}: {
-    python = nixpkgs.python3; #
+    python = nixpkgs.python39; #
     inherit #
       (nixpkgs)
       pkg-config
@@ -18,24 +18,24 @@
       ;
   };
 
-  name = "speechtotext-python"; #
-  version = "0.3.15 ";
+  name = "packagename-jarne"; #
+  version = "0.3.0 ";
 
-  mkDerivation = { #
-    nativeBuildInputs = [
-      config.deps.pkg-config
-    ];
-    propagatedBuildInputs = [
-      config.deps.zlib
-      config.deps.libjpeg
-    ];
-  };
+  # mkDerivation = { #
+  #   nativeBuildInputs = [
+  #     config.deps.pkg-config
+  #   ];
+  #   propagatedBuildInputs = [
+  #     config.deps.zlib
+  #     config.deps.libjpeg
+  #   ];
+  # };
 
-  buildPythonPackage = { #
-    pythonImportsCheck = [
-      "PIL"
-    ];
-  };
+  # buildPythonPackage = { #
+  #   pythonImportsCheck = [
+  #     "PIL"
+  #   ];
+  # };
 
   pip = {
     requirementsList = ["${config.name}==${config.version}"]; #
