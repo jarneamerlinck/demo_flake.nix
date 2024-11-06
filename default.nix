@@ -18,8 +18,8 @@
       ;
   };
 
-  name = "pillow"; #
-  version = "10.4.0";
+  name = "speechtotext-python"; #
+  version = "0.3.15 ";
 
   mkDerivation = { #
     nativeBuildInputs = [
