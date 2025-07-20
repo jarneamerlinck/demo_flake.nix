@@ -2,7 +2,13 @@
 
 This project is based on uv2nix.
 
-you can build it with
+Before we can build for nix we should lock uv
+
+```bash
+uv lock
+```
+
+now you can build for nix
 
 ```bash
 nix build
