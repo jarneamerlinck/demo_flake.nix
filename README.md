@@ -1,11 +1,11 @@
 # Demo for a nix flake python project
 
-This is a demo nix flake to experiment with
+This project is based on uv2nix.
 
-
+you can build it with
 
 ```bash
-nix run
+nix build
 ```
 
 
