@@ -19,3 +19,7 @@ build-backend = "hatchling.build"
 dev = [
     "ruff>=0.6.7",
 ]
+
+
+[tool.pycoral]
+coral_version = "2.0"

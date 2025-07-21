@@ -38,6 +38,7 @@
       # Load a uv workspace from a workspace root.
       # Uv2nix treats all uv projects as workspace projects.
       workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
+      inherit (pkgs) nix-ld;
 
       # Create package overlay from workspace.
       overlay = workspace.mkPyprojectOverlay {
@@ -188,6 +189,9 @@
             packages = [
               virtualenv
               pkgs.uv
+              pkgs.libffi
+              pkgs.uv
+              
             ];
 
             env = {

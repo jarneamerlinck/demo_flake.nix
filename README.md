@@ -2,9 +2,12 @@
 
 This project is based on uv2nix.
 
-Before we can build for nix we should lock uv
+Before we can build for nix we should lock uv.
+
+The `nix develop .#impure` is needed to run `uv lock` in nixos
 
 ```bash
+nix develop .#impure
 uv lock
 ```
 
