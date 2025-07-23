@@ -89,7 +89,7 @@
       # Package a virtual environment as our main application.
       #
       # Enable no optional dependencies for production build.
-      packages.x86_64-linux.default = pythonSet.mkVirtualEnv "hello-world-env" workspace.deps.default;
+      packages.x86_64-linux.default = pythonSet.mkVirtualEnv "coral-env" workspace.deps.default;
 
       # Make hello runnable with `nix run`
       apps.x86_64-linux = {
@@ -140,7 +140,7 @@
               # Use environment variable
               root = "$REPO_ROOT";
               # Optional: Only enable editable for these packages
-              # members = [ "hello-world" ];
+              # members = [ "coral" ];
             };
 
             # Override previous set with our overrideable overlay.
@@ -150,7 +150,7 @@
 
                 # Apply fixups for building an editable package of your workspace packages
                 (final: prev: {
-                  hello-world = prev.hello-world.overrideAttrs (old: {
+                  coral = prev.coral.overrideAttrs (old: {
                     # It's a good idea to filter the sources going into an editable build
                     # so the editable package doesn't have to be rebuilt on every change.
                     src = lib.fileset.toSource {
@@ -182,7 +182,7 @@
             # Build virtual environment, with local packages being editable.
             #
             # Enable all optional dependencies for development.
-            virtualenv = editablePythonSet.mkVirtualEnv "hello-world-dev-env" workspace.deps.all;
+            virtualenv = editablePythonSet.mkVirtualEnv "coral-dev-env" workspace.deps.all;
 
           in
           pkgs.mkShell {
@@ -191,7 +191,7 @@
               pkgs.uv
               pkgs.libffi
               pkgs.uv
-              
+
             ];
 
             env = {
