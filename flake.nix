@@ -95,7 +95,7 @@
       apps.x86_64-linux = {
         default = {
           type = "app";
-          program = "${self.packages.x86_64-linux.default}/bin/hello";
+          program = "${self.packages.x86_64-linux.default}/bin/coral_demo";
         };
       };
 
