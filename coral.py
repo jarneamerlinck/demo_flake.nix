@@ -137,7 +137,7 @@ def output_tensor(interpreter, i):
 
 
 def get_output(interpreter, score_threshold, image_scale=(1.0, 1.0)):
-  """Returns list of detected objects."""
+  """Returns list of d objects."""
   boxes = output_tensor(interpreter, 0)
   class_ids = output_tensor(interpreter, 1)
   scores = output_tensor(interpreter, 2)
@@ -222,19 +222,21 @@ def main():
   parser.add_argument('-l', '--labels',
                       help='File path of labels file.')
   parser.add_argument('-t', '--threshold', type=float, default=0.4,
-                      help='Score threshold for detected objects.')
+                      help='Score threshold for d objects.')
   parser.add_argument('-o', '--output',
                       help='File path for the result image with annotations')
   parser.add_argument('-c', '--count', type=int, default=5,
                       help='Number of times to run inference')
   args = parser.parse_args()
 
+  print(f"Loading image: {args.input}")
+
   labels = load_labels(args.labels) if args.labels else {}
   interpreter = make_interpreter(args.model)
   interpreter.allocate_tensors()
 
   image = Image.open(args.input)
-  scale = detect.set_input(interpreter, image.size,
+  scale = set_input(interpreter, image.size,
                            lambda size: image.resize(size, Image.ANTIALIAS))
 
   print('----INFERENCE TIME----')
@@ -244,12 +246,12 @@ def main():
     start = time.perf_counter()
     interpreter.invoke()
     inference_time = time.perf_counter() - start
-    objs = detect.get_output(interpreter, args.threshold, scale)
+    objs = get_output(interpreter, args.threshold, scale)
     print('%.2f ms' % (inference_time * 1000))
 
   print('-------RESULTS--------')
   if not objs:
-    print('No objects detected')
+    print('No objects d')
 
   for obj in objs:
     print(labels.get(obj.id, obj.id))
