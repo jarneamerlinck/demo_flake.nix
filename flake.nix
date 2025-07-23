@@ -88,8 +88,14 @@
     {
       # Package a virtual environment as our main application.
       #
-      # Enable no optional dependencies for production build.
-      packages.x86_64-linux.default = pythonSet.mkVirtualEnv "coral-env" workspace.deps.default;
+      # Enable extra dependencies
+      packages.x86_64-linux.default = pkgs.symlinkJoin {
+        name = "coral-env-with-edgetpu";
+        paths = [
+          (pythonSet.mkVirtualEnv "coral-env" workspace.deps.default)
+          pkgs.libedgetpu
+        ];
+      };
 
       # Make hello runnable with `nix run`
       apps.x86_64-linux = {
