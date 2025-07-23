@@ -93,10 +93,13 @@
         name = "coral-env-with-edgetpu";
         paths = [
           (pythonSet.mkVirtualEnv "coral-env" workspace.deps.default)
-          pkgs.libedgetpu
         ];
+        buildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/coral_demo \
+            --set LD_LIBRARY_PATH ${lib.makeLibraryPath [ pkgs.libedgetpu ]}
+        '';
       };
-
       # Make hello runnable with `nix run`
       apps.x86_64-linux = {
         default = {
