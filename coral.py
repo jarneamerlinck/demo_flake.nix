@@ -191,13 +191,26 @@ def load_labels(path, encoding='utf-8'):
 
 def make_interpreter(model_file):
   model_file, *device = model_file.split('@')
-  return tflite.Interpreter(
-      model_path=model_file,
-      experimental_delegates=[
-          tflite.load_delegate(EDGETPU_SHARED_LIB,
-                               {'device': device[0]} if device else {})
-      ])
+  delegate_options = {'device': device[0]} if device else {}
 
+  try:
+    delegate = tflite.load_delegate(EDGETPU_SHARED_LIB, delegate_options)
+  except ValueError as e:
+    raise RuntimeError(
+      f"Failed to load Edge TPU delegate. Make sure the Coral device is connected "
+      f"and that you have installed the Edge TPU runtime. Original error: {e}"
+    )
+
+  interpreter = tflite.Interpreter(
+      model_path=model_file,
+      experimental_delegates=[delegate]
+  )
+
+  # Optional: sanity check to ensure Edge TPU-compatible model
+  if 'edgetpu' not in model_file.lower():
+    print("Warning: Model file name doesn't indicate it's compiled for Edge TPU.")
+
+  return interpreter
 
 def draw_objects(draw, objs, labels):
   """Draws the bounding box and label for each object."""
