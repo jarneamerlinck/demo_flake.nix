@@ -1,7 +1,7 @@
 [project]
 name = "coral"
 version = "0.1.0"
-description = "Add your description here"
+description = "Google coral inference on nixos"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

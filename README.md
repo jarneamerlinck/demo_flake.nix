@@ -1,6 +1,24 @@
 # Demo for a nix flake python project
 
-This project is based on uv2nix.
+This demo brings google coral inference to nixos with `uv2nix`
+
+There are some requirements on the host itself
+
+you'll need the options below in your nixos config. The `edgetpu-compiler` package is only needed if you want to make a `tflite` model coral compatible.
+
+```nix
+{ pkgs, ... }:
+
+{
+  hardware.coral.usb.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    libedgetpu
+    edgetpu-compiler
+  ];
+}
+```
+
 
 Before we can build for nix we should lock uv.
 

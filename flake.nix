@@ -1,5 +1,5 @@
 {
-  description = "Hello world flake using uv2nix";
+  description = "Google coral inference on nixos";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
