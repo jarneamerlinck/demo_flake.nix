@@ -1,2 +1,4 @@
+import os
+
 def hello():
-    print("hello world")
+    print(f"hello world from {os.path.abspath(__file__)}")
